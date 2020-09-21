@@ -1,7 +1,7 @@
 import pygame
 
-def text_objects(text, font):
-    textSurface = font.render(text, True, (0,0,0))
+def text_objects(text, font,color):
+    textSurface = font.render(text, True, color)
     return textSurface, textSurface.get_rect()
 
 class Niveles(object):
@@ -32,13 +32,15 @@ class Niveles(object):
 
                 screen.fill((255, 255, 255))
                 largeText = pygame.font.Font('space_age.ttf', 90)
-                TextSurf, TextRect = text_objects("Nivel 1", largeText)
-                TextRect.center = ((1200 / 2), (600 / 2))
+                TextSurf, TextRect = text_objects("Nivel 1", largeText,(0,0,0))
+                TextRect.center = ((1200 / 2), 100)
                 screen.blit(TextSurf, TextRect)
                 smallText = pygame.font.Font('freesansbold.ttf', 50)
-                TextSurf2, TextRect2 = text_objects("En el nivel 1 tenés que esquivar todo", smallText)
-                TextRect2.center = ((1200 / 2), (600))
+                TextSurf2, TextRect2 = text_objects("Objetivo: tenés que esquivar todo", smallText,(0,0,0))
+                TextRect2.center = ((1200 / 2), (170))
                 screen.blit(TextSurf2, TextRect2)
+                intro1 = pygame.image.load('intronivel1.jpg')
+                screen.blit(intro1, (200, 260))
                 pygame.display.update()
 
         if self.nivel == 2:
@@ -54,13 +56,19 @@ class Niveles(object):
 
                 screen.fill((255, 255, 255))
                 largeText = pygame.font.Font('space_age.ttf', 90)
-                TextSurf, TextRect = text_objects("Nivel 2", largeText)
-                TextRect.center = ((1200 / 2), (600 / 2))
+                TextSurf, TextRect = text_objects("Nivel 2", largeText, (0, 0, 0))
+                TextRect.center = ((1200 / 2), 100)
                 screen.blit(TextSurf, TextRect)
                 smallText = pygame.font.Font('freesansbold.ttf', 50)
-                TextSurf2, TextRect2 = text_objects("Ahora con tiros", smallText)
-                TextRect2.center = ((1200 / 2), (600))
+                TextSurf2, TextRect2 = text_objects("Ahora podés disparar", smallText, (0, 0, 0))
+                TextRect2.center = ((1200 / 2), (170))
                 screen.blit(TextSurf2, TextRect2)
+                smallText = pygame.font.Font('freesansbold.ttf', 30)
+                TextSurf2, TextRect2 = text_objects("(presioná la s en el teclado)", smallText, (0, 0, 0))
+                TextRect2.center = ((1200 / 2), (220))
+                screen.blit(TextSurf2, TextRect2)
+                intro1 = pygame.image.load('intronivel2.jpg')
+                screen.blit(intro1, (200, 260))
                 pygame.display.update()
 
         if self.nivel == 3:
@@ -76,17 +84,20 @@ class Niveles(object):
 
                 screen.fill((255, 255, 255))
                 largeText = pygame.font.Font('space_age.ttf', 90)
-                TextSurf, TextRect = text_objects("Nivel 3", largeText)
-                TextRect.center = ((1200 / 2), (600 / 2))
+                TextSurf, TextRect = text_objects("Nivel 3", largeText, (0, 0, 0))
+                TextRect.center = ((1200 / 2), 100)
                 screen.blit(TextSurf, TextRect)
                 smallText = pygame.font.Font('freesansbold.ttf', 50)
-                TextSurf2, TextRect2 = text_objects("Tiros de todos lados", smallText)
-                TextRect2.center = ((1200 / 2), (600))
+                TextSurf2, TextRect2 = text_objects("ahora te quiero ver...", smallText, (0, 0, 0))
+                TextRect2.center = ((1200 / 2), (170))
                 screen.blit(TextSurf2, TextRect2)
+                intro1 = pygame.image.load('intronivel3.jpg')
+                screen.blit(intro1, (225, 260))
                 pygame.display.update()
 
         if self.nivel == 4:
             intro = True
+            altura = 800
             while intro:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -98,12 +109,17 @@ class Niveles(object):
                         quit()
 
                 screen.fill((255, 255, 255))
+                intro1 = pygame.image.load('globos.png')
+                altura = altura - 10
+                if altura == -600:
+                    altura = 800
+                screen.blit(intro1, (0, altura))
                 largeText = pygame.font.Font('space_age.ttf', 90)
-                TextSurf, TextRect = text_objects("Fin del juego", largeText)
+                TextSurf, TextRect = text_objects("Fin del juego", largeText,(0,0,0))
                 TextRect.center = ((1200 / 2), (600 / 2))
                 screen.blit(TextSurf, TextRect)
                 smallText = pygame.font.Font('freesansbold.ttf', 50)
-                TextSurf2, TextRect2 = text_objects("GG, you win", smallText)
+                TextSurf2, TextRect2 = text_objects("GG, you win", smallText,(0,0,0))
                 TextRect2.center = ((1200 / 2), (600))
                 screen.blit(TextSurf2, TextRect2)
                 pygame.display.update()

@@ -1,14 +1,14 @@
-import pygame, random,math
+import pygame,math,time
 import intro
 import tablero
-from enemigo import Roca,RocaLoca,Marciano
+from enemigo import Roca,RocaLoca,Marciano,MarcianoPlus
 from niveles import Niveles
 from player import Player,Disparo
 
 # puntaje
 puntaje = 0
 # nivel
-nivel_actual = 3
+nivel_actual = 1
 
 def main(nivel_param):
     # inicializamos el juego
@@ -24,7 +24,7 @@ def main(nivel_param):
     screen = pygame.display.set_mode((maxWidth,800))
 
     #titulo e ícono
-    pygame.display.set_caption("Llegar el Sol")
+    pygame.display.set_caption("Llegar al Sol")
     icon = pygame.image.load('favicon.ico')
     pygame.display.set_icon(icon)
 
@@ -46,6 +46,8 @@ def main(nivel_param):
         listaEnemigos.append(RocaLoca(maxWidth, maxHeight, cual,screen))
     def getMarciano():
         listaEnemigos.append(Marciano(maxWidth, maxHeight, screen))
+    def getMarcianoPlus():
+        listaEnemigos.append(MarcianoPlus(maxWidth, maxHeight, screen))
 
     listaDisparos = []
 
@@ -61,7 +63,12 @@ def main(nivel_param):
             if isinstance(choque, Marciano):
                 if choque.noExploto == 10:
                     puntaje = puntaje + 500
+            #matar a un marciano plus suma 700 puntos
+            if isinstance(choque, MarcianoPlus):
+                if choque.noExploto == 10:
+                    puntaje = puntaje + 700
 
+    #cualquier enemigo vs jugador
     def evaluarColision():
         evaluarPuntaje()
         for enemigos in listaEnemigos:
@@ -70,10 +77,11 @@ def main(nivel_param):
             if distancia <= (jugador.width - jugador.height):
                 return True
 
+    #disparo del jugador vs enemigos Marciano OR MarcianoPlus
     def colisionDisparos():
         for enemigo in listaEnemigos:
-            if isinstance(enemigo, Marciano):
-                #si es un Marciano y tiene su explosion mayor a 5 hay que eliminarlo de la lista
+            if isinstance(enemigo, Marciano) or isinstance(enemigo, MarcianoPlus):
+                #si es un Marciano y tiene su explosion == 10 hay que eliminarlo de la lista
                 if enemigo.noExploto == 10:
                     listaEnemigos.remove(enemigo)
                 for disparo in listaDisparos:
@@ -82,10 +90,30 @@ def main(nivel_param):
                         enemigo.noExploto = 1
                         listaDisparos.remove(disparo)
 
+    # disparo enemigo vs player
+    def colisionFuegoNoAmigo():
+        for enemigo in listaEnemigos:
+            if isinstance(enemigo, MarcianoPlus):
+                # si es un MarcianoPlus y tiene su explosion == 10 hay que eliminarlo de la lista
+                distancia3 = math.sqrt(
+                        math.pow(enemigo.balaX - jugador.x, 2) + math.pow(enemigo.balaY - jugador.y, 2))
+                if distancia3 <= 35:
+                    gameOver(screen)
 
+    def gameOver(screen):
+        while True:
+            screen.fill((255, 255, 255))
+            for img in ["gameover1.png", "gameover2.png", "gameover3.png", "gameover4.png"]:
+                image = pygame.image.load(img)
+                screen.blit(image, (0, 0))
+                pygame.display.update()
+                time.sleep(0.05)
+                for event in pygame.event.get():
+                    if event.type == pygame.KEYDOWN:
+                        main(nivel_param)
     #countdown
-    #timer_sec = 60 * 3
-    timer_sec = 20
+    timer_sec = 60 * 3
+
     # USEREVENTS are just integers
     # you can only have like 31 of them or something arbitrarily low
     timer = pygame.USEREVENT + 1
@@ -122,33 +150,79 @@ def main(nivel_param):
             if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
                 main(1)
             if event.type == pygame.KEYDOWN and event.key == pygame.K_s:
-                if nivel_param == 2:
-                    listaDisparos.append(Disparo(jugador,maxWidth,maxHeight,screen))
+                if nivel_param == 2: #nivel 2 sólo 1 disparo por vez
+                    if len(listaDisparos) == 0:
+                        listaDisparos.append(Disparo(jugador,maxWidth,maxHeight,screen))
+                if nivel_param == 3: #multiples disparos
+                   listaDisparos.append(Disparo(jugador,maxWidth,maxHeight,screen))
             if event.type == pygame.KEYUP:
                 playerY_change = 0
                 playerX_change = 0
 
             # segun el tiempo y el nivel pedimos los enemigos
             if event.type == timer:
-                #enemigos nivel 2
                 if nivel_param == 2:
-                    getMarciano()
-                    if timer_sec == 20:
+                    if timer_sec > 150:
+                        if timer_sec % 6 == 0:
+                            getRoca()
+                            getMarciano()
+                    if timer_sec > 120 and timer_sec < 150:
+                        getRoca()
                         getMarciano()
                     if timer_sec > 90 and timer_sec < 120:
                         if timer_sec % 2 == 0:
                             getRoca()
-                            #getMarciano()
+                            getMarciano()
+                    if timer_sec > 60 and timer_sec < 90:
+                        getRoca()
+                        getMarciano()
                     if timer_sec < 60:
                         getRoca()
-                        #getMarciano()
+                        getMarciano()
                     if timer_sec == 150:
                         getRocaLoca(1)
+                        getMarciano()
                     if timer_sec == 100:
                         getRocaLoca(2)
+                        getMarciano()
                     if timer_sec == 20:
                         getRocaLoca(3)
-
+                        getMarciano()
+                if nivel_param == 3:
+                    if timer_sec > 150:
+                        if timer_sec % 6 == 0:
+                            getRoca()
+                            getMarciano()
+                            getMarcianoPlus()
+                    if timer_sec > 120 and timer_sec < 150:
+                        getRoca()
+                        getMarciano()
+                        getMarcianoPlus()
+                    if timer_sec > 90 and timer_sec < 120:
+                        if timer_sec % 2 == 0:
+                            getRoca()
+                            getMarciano()
+                            getMarcianoPlus()
+                    if timer_sec > 60 and timer_sec < 90:
+                        getRoca()
+                        getMarciano()
+                        getMarcianoPlus()
+                    if timer_sec < 60:
+                        getRoca()
+                        getMarciano()
+                        getMarcianoPlus()
+                    if timer_sec == 150:
+                        getRocaLoca(1)
+                        getMarciano()
+                        getMarcianoPlus()
+                    if timer_sec == 100:
+                        getRocaLoca(2)
+                        getMarciano()
+                        getMarcianoPlus()
+                    if timer_sec == 20:
+                        getRocaLoca(3)
+                        getMarciano()
+                        getMarcianoPlus()
                 #enemigos nivel 1
                 if nivel_param == 1:
                     if timer_sec > 150:
@@ -184,16 +258,21 @@ def main(nivel_param):
         jugador.draw(screen)
 
         for bala in listaDisparos:
+            # si la bala no está en la pantalla la sacamos de la lista
+            if bala.balaX >= maxWidth:
+                listaDisparos.remove(bala)
             bala.draw(screen)
 
-        for rock in listaEnemigos:
-            rock.draw(screen)
+        for rival in listaEnemigos:
+            rival.draw(screen)
 
         counter += 1
         if evaluarColision():
-            intro.gameOver(screen)
+            gameOver(screen)
 
         colisionDisparos()
+
+        colisionFuegoNoAmigo()
         #loop de pausa
         while pause:
             for event in pygame.event.get():
