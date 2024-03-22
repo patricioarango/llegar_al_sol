@@ -22,8 +22,10 @@ Clone or download the repo
     
 ## Requirements
 
-Python3 and PyGame Library
-To install pygame: 
+Python3 and PyGame Library 
+
+To install pygame:  
+
 ```bash
 python3 -m pip install -U pygame --user
 ```
