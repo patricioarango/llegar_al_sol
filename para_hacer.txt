@@ -1,4 +1,0 @@
-+cambiar favicon.ico
-+cambiar intronivel2.jpg
-+cambiar intronivel3.jpg
-+agregar barrita de vida

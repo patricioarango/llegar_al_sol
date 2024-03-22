@@ -17,7 +17,7 @@ Clone or download the repo
 
 ```bash
   cd llegar_al_sol
-  python3 -m main.py
+  python3 -m main
 ```
     
 ## Requirements

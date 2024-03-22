@@ -5,23 +5,19 @@ from enemigo import Roca,RocaLoca,Marciano,MarcianoPlus
 from niveles import Niveles
 from player import Player,Disparo
 
-# puntaje
 puntaje = 0
-# nivel
 nivel_actual = 1
 
 def main(nivel_param):
-    # inicializamos el juego
     pygame.init()
 
     # obtiene el número de milisegundos transcurridos después de haber llamado al método 'pygame.init()'
     start_ticks=pygame.time.get_ticks() #guardamos segundo incial
 
     #creamos la ventana
-    maxHeight = 600
+    maxHeight = 800
     maxWidth = 1200
-    #la ventana tiene 200px más de alto por el tablero
-    screen = pygame.display.set_mode((maxWidth,800))
+    screen = pygame.display.set_mode((maxWidth,maxHeight))
 
     #titulo e ícono
     pygame.display.set_caption("Llegar al Sol")
@@ -114,8 +110,6 @@ def main(nivel_param):
     #countdown
     timer_sec = 60 * 3
 
-    # USEREVENTS are just integers
-    # you can only have like 31 of them or something arbitrarily low
     timer = pygame.USEREVENT + 1
     pygame.time.set_timer(timer, 1000)  # sets timer with USEREVENT and delay in milliseconds
 
@@ -131,13 +125,11 @@ def main(nivel_param):
             #capturamos la X para cerrar
             if event.type == pygame.QUIT:
                 jugando = False
-            #sin movernos la nave empieza a bajar
-            #playerY_change = +1
-            # capturamos movimiento de la barra espaciadora
+
+            # agregamos pausa con la barra para debug
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 pause = True
-                #playerY_change = -4
-                #playerX_change = 0.2
+
             if event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
                 playerX_change = -3
             if event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
