@@ -2,7 +2,7 @@ import pygame,random,math
 
 class Roca(object):
     #roca
-    rocaImg = pygame.image.load('roca.png')
+    rocaImg = pygame.image.load('assets/images/roca.png')
     def __init__(self,maxWidth,maxHeight,screen):
         self.width = 64
         self.x = maxWidth - self.width
@@ -18,7 +18,7 @@ class Roca(object):
 
 class RocaLoca(object):
     #roca
-    rocaImg = pygame.image.load('roca.png')
+    rocaImg = pygame.image.load('assets/images/roca.png')
     def __init__(self,maxWidth,maxHeight,cual,screen):
         self.cual = cual
         self.width = 64
@@ -53,8 +53,8 @@ class RocaLoca(object):
 
 class Marciano(object):
     def __init__(self,maxWidth,maxHeight,screen):
-        self.marciImg = pygame.image.load('enemigo_2.png')
-        self.boomImg = pygame.image.load('boom.png')
+        self.marciImg = pygame.image.load('assets/images/enemigo_2.png')
+        self.boomImg = pygame.image.load('assets/images/boom.png')
         self.width = 100
         self.maxWidth = maxWidth
         self.maxHeight = maxHeight
@@ -79,10 +79,10 @@ class Marciano(object):
         self.x -= 0.8
 
 class MarcianoPlus(object):
-    marciImg = pygame.image.load('enemigo_1.png')
+    marciImg = pygame.image.load('assets/images/enemigo_1.png')
     def __init__(self,maxWidth,maxHeight,screen):
-        self.balaImg = pygame.image.load('balaenemiga.png')
-        self.boomImg = pygame.image.load('boom.png')
+        self.balaImg = pygame.image.load('assets/images/balaenemiga.png')
+        self.boomImg = pygame.image.load('assets/images/boom.png')
         self.width = 100
         self.maxWidth = maxWidth
         self.maxHeight = maxHeight

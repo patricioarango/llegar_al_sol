@@ -2,7 +2,7 @@ import pygame
 
 class Player(object):
     def __init__(self,maxWidth,maxHeight,screen):
-        self.playerImg = pygame.image.load('navejuego2.png')
+        self.playerImg = pygame.image.load('assets/images/navejuego2.png')
         self.width = 124
         self.height = 70
         self.x = 150
@@ -27,7 +27,7 @@ class Player(object):
 
 class Disparo(object):
     def __init__(self,Player,maxWidth,maxHeight,screen):
-        self.balaImg = pygame.image.load('bala.png')
+        self.balaImg = pygame.image.load('assets/images/bala.png')
         self.balaX = Player.x + Player.width
         self.balaY = Player.y + (Player.height / 2)
         self.maxWidth = maxWidth

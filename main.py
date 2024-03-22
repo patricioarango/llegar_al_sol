@@ -103,7 +103,7 @@ def main(nivel_param):
     def gameOver(screen):
         while True:
             screen.fill((255, 255, 255))
-            for img in ["gameover1.png", "gameover2.png", "gameover3.png", "gameover4.png"]:
+            for img in ["assets/images/gameover1.png", "assets/images/gameover2.png", "assets/images/gameover3.png", "assets/images/gameover4.png"]:
                 image = pygame.image.load(img)
                 screen.blit(image, (0, 0))
                 pygame.display.update()

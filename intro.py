@@ -20,16 +20,16 @@ def game_intro(screen):
 
         screen.fill((255,255,255))
 
-        largeText = pygame.font.Font('space_age.ttf', 90)
+        largeText = pygame.font.Font('assets/fonts/space_age.ttf', 90)
         TextSurf, TextRect = text_objects("Llegar al Sol", largeText)
         TextRect.center = ((1200 / 2), (150))
         screen.blit(TextSurf, TextRect)
 
-        mediumText = pygame.font.Font('space_age.ttf', 40)
+        mediumText = pygame.font.Font('assets/fonts/space_age.ttf', 40)
         texto = mediumText.render('¿estas listo?', False,(173,20,87))
         screen.blit(texto, (200,250))
 
-        smallText = pygame.font.Font('Ranchers-Regular.ttf', 50)
+        smallText = pygame.font.Font('assets/fonts/Ranchers-Regular.ttf', 50)
         TextSurf2, TextRect2 = text_objectsColor("Tres Niveles. Varios Enemigos. Diferentes objetivos.", smallText,(69,39,160))
         TextRect2.center = ((1200 / 2), (470))
         screen.blit(TextSurf2, TextRect2)
